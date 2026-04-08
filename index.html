@@ -962,11 +962,8 @@ function borrarP(p){
 }
 
 loadData();
-
-</script>
-</body>
-  <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxeYTOH3EQ0tpqMI9t2gxyPq0ChPXj5sfzzxKYfgDDHYSjGe_RWLRrRTGqYnsNVhhFo/exec";
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxN_t5Z8XclyJ_-9NDXCAge8X6tfpx78BZt8jEnIkGhEcfPJueyYDYF_lackp7hh_t9/exec";
 
 async function guardarEnSheets(data) {
   try {
@@ -974,17 +971,41 @@ async function guardarEnSheets(data) {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "text/plain;charset=utf-8"
+        "Content-Type": "application/json"
       }
     });
 
     const result = await res.json();
     console.log("Guardado en Sheets:", result);
-    alert("Enviado a Sheets");
+    alert("Enviado correctamente");
+
   } catch (err) {
     console.error("Error:", err);
     alert("Error al conectar con Sheets");
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("leadForm");
+
+  if (!form) {
+    console.error("No se encontró el formulario");
+    return;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const data = {
+      nombre: form.nombre.value,
+      email: form.email.value,
+      telefono: form.telefono.value,
+      estado: "Nuevo"
+    };
+
+    guardarEnSheets(data);
+  });
+});
 </script>
+</body>
 </html>
